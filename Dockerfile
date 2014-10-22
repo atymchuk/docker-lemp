@@ -61,6 +61,4 @@ EXPOSE 3306
 RUN apt-get install -y php5-memcache memcached
 # END Memcached Installation
 
-RUN /usr/bin/memcached -m 2000 -u nobody -l 0.0.0.0 -c 1024 -p 11211
-
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
