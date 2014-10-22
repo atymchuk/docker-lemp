@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.9
+FROM phusion/baseimage:0.9.15
 
 ENV HOME /root
 
@@ -8,11 +8,16 @@ CMD ["/sbin/my_init"]
 
 # Nginx-PHP Installation
 RUN apt-get update
-RUN apt-get install -y vim curl wget build-essential python-software-properties
+RUN apt-get install -y curl \
+                       wget \
+                       build-essential \
+                       python-software-properties \
+                       bash-completion
+
 RUN add-apt-repository -y ppa:ondrej/php5
 RUN add-apt-repository -y ppa:nginx/stable
 RUN apt-get update
-RUN apt-get install -y php5-cli php5-fpm php5-mysql php5-pgsql php5-sqlite php5-curl\
+RUN apt-get install -y php5-cli php5-fpm php5-mysql php5-curl \
 		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy
 
 RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/fpm/php.ini
@@ -35,5 +40,26 @@ RUN chmod +x        /etc/service/phpfpm/run
 
 EXPOSE 80
 # End Nginx-PHP
+
+# MySQL Installation
+RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
+RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
+RUN apt-get install -y mysql-server
+
+ADD build/my.cnf    /etc/mysql/my.cnf
+
+RUN mkdir           /etc/service/mysql
+ADD build/mysql.sh  /etc/service/mysql/run
+RUN chmod +x        /etc/service/mysql/run
+
+RUN mkdir -p        /var/lib/mysql/
+RUN chmod -R 755    /var/lib/mysql/
+
+ADD etc/my_init.d/99_mysql_setup.sh /etc/my_init.d/99_mysql_setup.sh
+RUN chmod +x /etc/my_init.d/99_mysql_setup.sh
+
+EXPOSE 3306
+# END MySQL Installation
+
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
