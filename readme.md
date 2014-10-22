@@ -5,7 +5,7 @@ This is the basis for LEMP stack. This is based on [phusion/baseimage-docker](ht
 You can build this yourself after cloning the project (assuming you have Docker installed).
 
 ```bash
-cd /path/to/repo/docker-nginx-php
+cd /path/to/repo/docker-lemp
 docker build -t webapp . # Build a Docker image named "webapp" from this location "."
 # wait for it to build...
 
@@ -22,4 +22,3 @@ This will bind local ports 80 and 3306 to the respective container's ports. This
 * `-d webapp` - Use the image tagged "webapp"
 * `/sbin/my_init` - Run the init scripts used to kick off long-running processes and other bootstrapping, as per [phusion/baseimage-docker](https://github.com/phusion/baseimage-docker)
 * `--enable-insecure-key` - Enable a generated SSL key so you can SSH into the container, again as per [phusion/baseimage-docker](https://github.com/phusion/baseimage-docker). Generate your own SSH key for production use.
-* If you use this with [fideloper/docker-mysql](https://github.com/fideloper/docker-mysql), then [link this container](http://docs.docker.io/en/latest/use/working_with_links_names/) with MySQL's (after running the MySQL container first) via `-link mysql:db`
