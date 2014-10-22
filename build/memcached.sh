@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/usr/bin/memcached -m 2000 -u nobody -l 0.0.0.0 -c 1024 -p 11211
