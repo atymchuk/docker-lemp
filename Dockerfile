@@ -10,12 +10,8 @@ CMD ["/sbin/my_init"]
 RUN apt-get update
 RUN apt-get install -y curl \
                        wget \
-                       build-essential \
-                       python-software-properties \
                        bash-completion
 
-RUN add-apt-repository -y ppa:ondrej/php5
-RUN add-apt-repository -y ppa:nginx/stable
 RUN apt-get update
 RUN apt-get install -y php5-cli php5-fpm php5-mysql php5-curl \
 		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy
@@ -61,5 +57,11 @@ RUN chmod +x /etc/my_init.d/99_mysql_setup.sh
 EXPOSE 3306
 # END MySQL Installation
 
+# Install Memcached
+RUN apt-get install -y php5-memcache memcached
+# END Memcached Installation
+
+RUN /usr/bin/memcached -m 2000 -u nobody -l 0.0.0.0 -c 1024 -p 11211
+# ADD supervisor/memcached.conf /etc/supervisor/conf.d/memcached.conf
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
