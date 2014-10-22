@@ -13,7 +13,7 @@ docker build -t webapp . # Build a Docker image named "webapp" from this locatio
 docker run -v /path/to/local/web/files:/var/www:rw -p 80:80 -p 3306:3306 -d webapp /sbin/my_init --enable-insecure-key
 ```
 
-This will bind local ports 80 and 3306 to the respective container's ports. This means you should be able to go to "localhost" in your browser (or the IP address of your virtual machine oh which Docker is running) and see your web application files.
+This will bind local ports 80 and 3306 to the respective container's ports. This means you should be able to go to "localhost" in your browser (or the IP address of your virtual machine on which Docker is running) and see your web application files.
 
 * `docker run` - starts a new docker container
 * `-v /path/to/local/web/files:/var/www:rw` - Bind a local directory to a directory in the container for file sharing. `rw` makes it "read-write", so the container can write to the directory.
