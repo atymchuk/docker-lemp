@@ -59,6 +59,9 @@ EXPOSE 3306
 
 # Install Memcached
 RUN apt-get install -y php5-memcache memcached
+
+ADD build/memcached.sh /etc/service/memcached/run
+RUN chmod +x        /etc/service/memcached/run
 # END Memcached Installation
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
