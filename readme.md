@@ -22,3 +22,8 @@ This will bind local ports 80 and 3306 to the respective container's ports. This
 * `-d webapp` - Use the image tagged "webapp"
 * `/sbin/my_init` - Run the init scripts used to kick off long-running processes and other bootstrapping, as per [phusion/baseimage-docker](https://github.com/phusion/baseimage-docker)
 * `--enable-insecure-key` - Enable a generated SSL key so you can SSH into the container, again as per [phusion/baseimage-docker](https://github.com/phusion/baseimage-docker). Generate your own SSH key for production use.
+
+### TODO
+
+* Add an optional file `mysql_root_password` allowing to change the root password for MySQL
+* Add an optional directory `Sites` where the user would put pre-configured nginx *.conf sites, copy those to `/etc/nginx/sites-available` and create a symlink in `/etc/nginx/sites-enabled` thus allowing them to run in the container.
