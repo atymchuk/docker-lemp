@@ -54,7 +54,7 @@ RUN chmod -R 755    /var/lib/mysql/
 ADD etc/my_init.d/99_mysql_setup.sh /etc/my_init.d/99_mysql_setup.sh
 RUN chmod +x /etc/my_init.d/99_mysql_setup.sh
 
-EXPOSE 3306
+# EXPOSE 3306
 # END MySQL Installation
 
 # Install Memcached
