@@ -60,8 +60,22 @@ EXPOSE 3306
 # Install Memcached
 RUN apt-get install -y php5-memcache memcached
 
+RUN mkdir -p 		/etc/service/memcached
 ADD build/memcached.sh /etc/service/memcached/run
-RUN chmod +x        /etc/service/memcached/run
+RUN chmod +x        	/etc/service/memcached/run
 # END Memcached Installation
+
+# Install Lsyncd
+RUN apt-get install -y lsyncd
+
+RUN mkdir -p 	/etc/service/lsyncd
+RUN mkdir -p 	/var/log/lsyncd
+RUN touch 	/var/log/lsyncd/lsyncd.{log,status}
+
+ADD etc/my_init.d/88_lsyncd_setup.sh
+ADD build/lsyncd.sh /etc/service/lsyncd/run
+RUN chmod +x        /etc/service/lsyncd/run
+# END Lsyncd Installation
+
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
