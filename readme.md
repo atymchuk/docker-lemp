@@ -25,4 +25,4 @@ This will bind local ports 80 and 3306 to the respective container's ports. This
 ### TODO
 
 * Add an optional file `mysql_root_password` allowing to change the root password for MySQL
-* Add an optional directory `Sites` where the user would put pre-configured nginx *.conf sites, copy those to `/etc/nginx/sites-available` and create a symlink in `/etc/nginx/sites-enabled` thus allowing them to run in the container.
+* Optionally serve nginx-formatted *.conf files from the directory `www` and enable those to run in the container.
