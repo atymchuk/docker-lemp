@@ -14,9 +14,11 @@ RUN apt-get install -y curl \
                        wget \
                        bash-completion
 
-RUN apt-get update
+RUN apt-get update >
+RUN echo 'Installing php4-fpm...'
 RUN apt-get install -y php5-cli php5-fpm php5-mysql php5-curl \
-		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy
+		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy > /dev/null
+RUN echo 'Finiched installing php4-fpm'
 
 RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/fpm/php.ini
 RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/cli/php.ini
@@ -66,18 +68,5 @@ RUN mkdir -p 		/etc/service/memcached
 ADD build/memcached.sh /etc/service/memcached/run
 RUN chmod +x        	/etc/service/memcached/run
 # END Memcached Installation
-
-# Install Lsyncd
-RUN apt-get install -y lsyncd
-
-RUN mkdir -p 	/etc/service/lsyncd
-RUN mkdir -p 	/var/log/lsyncd
-RUN touch 	/var/log/lsyncd/lsyncd.{log,status}
-
-ADD etc/my_init.d/88_lsyncd_setup.sh /etc/my_init.d/88_lsyncd_setup.sh
-ADD build/lsyncd.sh /etc/service/lsyncd/run
-RUN chmod +x        /etc/service/lsyncd/run
-# END Lsyncd Installation
-
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
