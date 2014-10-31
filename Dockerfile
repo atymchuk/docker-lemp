@@ -14,7 +14,6 @@ RUN apt-get install -y curl \
                        wget \
                        bash-completion
 
-RUN apt-get update >
 RUN echo 'Installing php4-fpm...'
 RUN apt-get install -y php5-cli php5-fpm php5-mysql php5-curl \
 		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy > /dev/null
@@ -44,7 +43,9 @@ EXPOSE 80
 # MySQL Installation
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
-RUN apt-get install -y mysql-server
+RUN echo 'Installing mysql server...'
+RUN apt-get install -y mysql-server > /dev/null
+RUN echo 'Funished installing mysql server'
 
 ADD build/my.cnf    /etc/mysql/my.cnf
 
