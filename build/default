@@ -1,11 +1,11 @@
 server {
-    listen  80;
+    listen 80 default_server;
 
     root /var/www;
-    index index.html index.htm index.php;
+    index index.html index.php;
 
     # Make site accessible from http://set-ip-address.xip.io
-    server_name park-tennis.ru;
+    # server_name www.example.com;
 
     access_log /var/log/nginx/localhost.com-access.log;
     error_log  /var/log/nginx/localhost.com-error.log error;
